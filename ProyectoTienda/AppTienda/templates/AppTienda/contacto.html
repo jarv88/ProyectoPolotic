@@ -1,0 +1,29 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Contacto{% endblock title %}
+
+
+{% block content %}
+<div class="formulario">
+
+    {% if "valido" in request.GET %}
+        <p>Enviado Correctamente</p>
+
+    {% endif %}
+
+    {% if "error" in request.GET %}
+        <p>Ocurrio un error al enviar</p>
+
+    {% endif %}
+
+    <form action="" method="POST"> {% csrf_token %}
+    <table>
+    {{ formulario.as_table }}
+    </table>
+
+    <input type="submit" value="Enviar">
+
+
+    </form>
+</div>
+{% endblock content %}

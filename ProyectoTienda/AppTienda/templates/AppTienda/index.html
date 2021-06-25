@@ -1,0 +1,16 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Home{% endblock title %}
+
+
+{% block content %}
+
+<h1>Productos</h1>
+<ul>
+
+{% for producto in productos %}
+    <li> {{ producto.titulo }} - {{ producto.precio }}  </li>
+{% endfor %}
+</ul>
+{% endblock content %}
+
