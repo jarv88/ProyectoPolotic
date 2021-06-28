@@ -1,0 +1,53 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Nuevo Producto{% endblock title %}
+
+{% block content %}
+
+   {% if "valido" in request.GET %}
+        <p>Creado Correctamente</p>
+    
+    {% endif %}
+
+    {% if "error" in request.GET %}
+        <p>Ocurrio un error al crear</p>
+    
+    {% endif %}
+
+ <form action="" method="POST"> {% csrf_token %}
+
+
+   <p id="p_titulo"><label for="titulo">Titulo: </label><input type="text" name="titulo" id="titulo"> </p>
+
+   <p id="p_descripcion"><label for="descripcion">Descripción: </label><textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea></p>
+
+   <p id="p_categoria"><label for="categoria">Categoria: </label>
+
+      <select name="categoria" id="categoria">
+
+      {% for categoria in categorias %}
+    
+      <option value="{{ categoria.nombre }}">{{ categoria.nombre }}</option>
+      {% endfor %}
+
+      </select>
+   
+    </p>
+
+   <p> <label for="imagen">Imagen: </label> <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg"></p>   
+
+
+   <p id="p_precio"><label for="precio">Precio: </label><input type="text" name="precio" id="precio"> </p>
+
+
+
+
+   
+
+    <input type="submit" value="Crear">
+
+
+ </form>
+
+
+{% endblock content %}

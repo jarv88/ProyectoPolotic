@@ -38,4 +38,24 @@ def contacto(request):
     return render(request, "AppTienda/contacto.html", {"formulario": form})
 
 def nuevo(request):
-    pass
+    cat = CategoriaProd.objects.all()
+    if request.method=="POST":
+        titulo=request.POST.get("titulo")
+        descripcion=request.POST.get("descripcion")
+        categoria=request.POST.get("categoria")
+        imagen=request.POST.get("imagen")
+        precio=request.POST.get("precio")
+
+        bcat = CategoriaProd.objects.get(nombre=categoria)
+
+        nuevo_prod=Producto(titulo=titulo,imagen=imagen,descripcion=descripcion,precio=precio,categoria=bcat)
+
+        try:
+            nuevo_prod.save()
+            return redirect("/nuevo/?valido")
+        except:
+            return redirect("/nuevo/?error")        
+
+
+
+    return render(request,"AppTienda/nuevo.html",{"categorias": cat})
