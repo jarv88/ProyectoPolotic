@@ -1,0 +1,17 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Categoria{% endblock title %}
+
+
+{% block content %}
+
+<h1>{{ categoria.nombre }}</h1>
+<ul>
+
+{% for producto in productos %}
+    <li> {{ producto.titulo }} </li>
+{% empty %}
+    <p>Nada que mostrar</p>
+{% endfor %}
+</ul>
+{% endblock content %}

@@ -9,7 +9,7 @@
 <ul>
 
 {% for categoria in categorias %}
-    <li> {{ categoria.nombre }} </li>
+    <li> <a href="{% url 'Tienda:b_categoria' categoria.nombre %}">{{ categoria.nombre }}</a>  </li>
 {% endfor %}
 </ul>
 {% endblock content %}

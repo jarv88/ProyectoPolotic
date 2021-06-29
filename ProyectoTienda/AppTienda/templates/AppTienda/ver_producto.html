@@ -1,0 +1,16 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Producto{% endblock title %}
+
+
+{% block content %}
+
+<h1>{{producto.titulo}}</h1>
+
+<p>{{ producto.categoria }} - ${{ producto.precio }}</p>
+
+<p>{{ producto.descripcion }}</p>
+
+<img class="" src="{{producto.imagen.url}}" alt="" style="width: 50%;">
+
+{% endblock content %}

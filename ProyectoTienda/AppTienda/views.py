@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Producto, CategoriaProd
-from .forms import ContactForm
+from .forms import ContactForm, ImagenUploadForm
 # Create your views here.
 def index(request):
     productos=Producto.objects.all()
@@ -9,6 +9,13 @@ def index(request):
 def categorias(request):
     cat = CategoriaProd.objects.all()
     return render(request, "AppTienda/categorias.html", {"categorias": cat})
+
+def categoria(request,categoria):
+    cat = CategoriaProd.objects.get(nombre=categoria)
+    productos= Producto.objects.filter(categoria=cat.id)
+    
+    #cat = CategoriaProd.objects.all()
+    return render(request, "AppTienda/categoria.html", {"productos": productos, "categoria": cat})
 
 def acerca(request):
     return render(request, "AppTienda/acerca.html",)
@@ -39,11 +46,20 @@ def contacto(request):
 
 def nuevo(request):
     cat = CategoriaProd.objects.all()
+    #Incluido para poder tener upload_to al momento de guardar la imagen
+    #Se puede mejorar
+    form = ImagenUploadForm(request.POST, request.FILES)
+    if form.is_valid():
+        img=form.cleaned_data['imagen']
+    ########################################################
+    ########################################################
     if request.method=="POST":
+
+    
         titulo=request.POST.get("titulo")
         descripcion=request.POST.get("descripcion")
         categoria=request.POST.get("categoria")
-        imagen=request.POST.get("imagen")
+        imagen=img  #request.POST.get("imagen")
         precio=request.POST.get("precio")
 
         bcat = CategoriaProd.objects.get(nombre=categoria)
@@ -59,3 +75,11 @@ def nuevo(request):
 
 
     return render(request,"AppTienda/nuevo.html",{"categorias": cat})
+
+
+def ver_producto(request,prod_id):
+    
+    producto= Producto.objects.get(id=prod_id)
+    
+    #cat = CategoriaProd.objects.all()
+    return render(request, "AppTienda/ver_producto.html", {"producto": producto,})
