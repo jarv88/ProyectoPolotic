@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Producto, CategoriaProd
 from .forms import ContactForm, ImagenUploadForm
+from django.core.mail import EmailMessage
+from django.conf import settings
 # Create your views here.
 def index(request):
     productos=Producto.objects.all()
@@ -31,13 +33,13 @@ def contacto(request):
             email = request.POST.get("email")
             mensaje = request.POST.get("mensaje")
 
-            # send_mail(nombre,contenido,) otra forma
-            #em = EmailMessage("Mensaje desde App",
-            #                  "El usuario {}, email: {}, escribe: \n\n {}".format(nombre, email, mensaje),
-            #                  "", ["joseangel038@gmail.com"], reply_to=[email])
+            #send_mail(nombre,contenido,) #otra forma
+            em = EmailMessage("Mensaje desde App",
+                              "El usuario {}, email: {}, escribe: \n\n {}".format(nombre, email, mensaje),
+                              "", [settings.EMAIL_HOST_USER], reply_to=[email])
 
             try:
-             #   em.send()
+                em.send()
                 return redirect("/contacto/?valido")
             except:
                 return redirect("/contacto/?error")

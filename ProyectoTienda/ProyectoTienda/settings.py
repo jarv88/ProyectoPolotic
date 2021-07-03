@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'ProyectoTienda.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./ProyectoTienda/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +123,15 @@ STATIC_URL = '/static/'
 #CONFIGURACION PARA GUARDAR IMAGENES (UPLOAD_TO EN MODELS)
 MEDIA_URL= '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+#CONFIGURACION PARA ENVIO DE CORREOS
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER=config('EMAIL')
+EMAIL_HOST_PASSWORD=config('EMAIL_PASSWORD')
+
+
+# Redirigir a la URL de inicio después de iniciar sesión (Default redirecciona a /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
