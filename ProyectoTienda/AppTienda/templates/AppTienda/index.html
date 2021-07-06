@@ -9,7 +9,7 @@
 <ul>
 
 {% for producto in productos %}
-    <li> <a href="{% url 'Tienda:VerProducto' producto.id %}"> {{ producto.titulo }} - ${{ producto.precio }} </a>   </li>
+    <li> <a href="{% url 'Tienda:VerProducto' producto.id %}"> {{ producto.titulo }} - ${{ producto.precio }} </a> - <a href="{% url 'Tienda:AgregarProducto' producto.id  %}">Agregar al carrito</a>  </li>
 {% endfor %}
 </ul>
 {% endblock content %}

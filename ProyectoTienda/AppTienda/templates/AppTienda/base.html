@@ -13,6 +13,27 @@
 </head>
 <body>
 
+
+    <div id="login">
+    <ul>
+    {% if request.user.is_authenticated %}
+            <li>Hola {{user.username}} </li>
+            <li><a href="{% url 'Tienda:VerCarro' %}">Ver Carrito</a></li>
+            <li><a href="{% url 'logout' %}">Salir</a></li>
+            
+            
+
+    {% else %}
+
+
+        
+            <li> <a href="{% url 'login' %}">Login</a> </li>
+            <li><a href="{% url 'Tienda:registrarse' %}">Registrarse</a> </li>
+            
+       
+    {% endif%}
+     </ul>
+    </div>
     <header>
         <h1>Tienda</h1>
     </header>

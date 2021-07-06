@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        {% block content %}
-        {% endblock %}
-    </body>
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="{% static 'AppTienda/css/estilos.css' %}" rel="stylesheet">
+
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <div id="login">
+        <ul>
+            <li> <a href="{% url 'login' %}">Login</a> </li>
+            <li><a href="{% url 'Tienda:registrarse' %}">Registrarse</a> </li>
+            
+        </ul>
+    
+    </div>
+    <header>
+        <h1>Tienda</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'Tienda:Index' %}">Home</a></li>
+           
+        </ul>
+        
+    </nav>
+    <section>
+    {% block content %} {% endblock content %}
+    </section>
+    <footer>
+        <p>Realizado por José Rojas - joseangel038@gmail.com</p>
+        <p>&copy; Sistema de Tienda y carrito de compras para PoloTic 2021</p>
+
+    </footer>
+
+</body>
 </html>

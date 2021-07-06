@@ -2,6 +2,18 @@
 
 {% block content %}
 
+{% if "valido" in request.GET %}
+        <p>Creado Correctamente</p>
+    
+    {% endif %}
+
+    {% if "error" in request.GET %}
+        <p>Ocurrio un error al crear</p>
+    
+    {% endif %}
+
+
+
 {% if form.errors %}
 <p>El usuario y la clave no coinciden, por favor intente nuevamente.</p>
 {% endif %}
@@ -37,6 +49,6 @@
 
 <p><a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a></p>
 <p>{{ next }}</p>
-{#<!-- <p><a href="{% url 'USUARIOS:registrarse' %}">Registrarse</a></p> -->#}
+<p><a href="{% url 'Tienda:registrarse' %}">Registrarse</a></p>
 
 {% endblock %}

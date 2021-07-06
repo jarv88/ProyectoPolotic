@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
+from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from .models import Producto, CategoriaProd
-from .forms import ContactForm, ImagenUploadForm
+from .forms import ContactForm, ImagenUploadForm,RegistroForm
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.contrib.auth import logout
+from .carro import Carro
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 def index(request):
     productos=Producto.objects.all()
@@ -85,3 +90,63 @@ def ver_producto(request,prod_id):
     
     #cat = CategoriaProd.objects.all()
     return render(request, "AppTienda/ver_producto.html", {"producto": producto,})
+
+def registrarse(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+
+            try:
+                form.save()    
+                return redirect("/accounts/login/?valido") 
+            except:
+                return redirect("/accounts/login/?error")     
+            #return HttpResponseRedirect(reverse('login'))
+    else:
+        form = RegistroForm()
+    return render(request, 'registration/registro.html', {
+        'form': form
+        })
+
+def logout(request):
+    logout(request)
+    return redirect("/accounts/login/")
+
+######################################
+###Vistas para el carrito de compra###
+######################################
+@login_required
+def agregar_producto(request,prod_id):
+    carro=Carro(request)
+    producto=Producto.objects.get(id=prod_id)
+    carro.agregar(producto=producto)
+    #print(carro)
+    #print(producto.precio)
+
+    return redirect("/")
+"""
+def eliminar_producto(request,prod_id):
+    carro=Carro(request)
+    producto=Producto.objects.get(id=prod_id)
+    carro.eliminar(producto=producto)
+
+    return redirect("tienda")
+"""
+def restar_producto(request,prod_id):
+    carro=Carro(request)
+    producto=Producto.objects.get(id=prod_id)
+    carro.restar_producto(producto=producto)
+    return redirect("/carro")
+
+def limpiar_carro(request):
+    carro=Carro(request)
+    carro.limpiar_carro()
+    return redirect("/")
+
+    
+
+def ver_carro(request):
+    carro= request.session.get("carro")
+    #print(carro)
+    return render(request, "AppTienda/ver_carro.html", {"carro": carro,})
+

@@ -1,0 +1,19 @@
+{% extends 'AppTienda/base.html' %}
+{% load static %}
+{% block title %}Tienda - Carrito{% endblock title %}
+
+
+{% block content %}
+
+<h1>Productos en Carrito de compras</h1>
+<ul>
+
+{% for id, valor in carro.items %}
+        <li>{{ valor.titulo }} - {{ valor.cantidad }} - ${{ valor.precio }} <a href="{% url 'Tienda:RestarCarro' valor.producto_id %}">X</a>  </li>
+    
+    {% endfor %}
+</ul>
+
+<a href="{% url 'Tienda:LimpiarCarro' %}">Vaciar carrito</a>
+
+{% endblock content %}
