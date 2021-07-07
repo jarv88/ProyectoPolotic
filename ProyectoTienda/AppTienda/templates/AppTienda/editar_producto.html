@@ -4,7 +4,49 @@
 
 
 {% block content %}
+    {% if "valido" in request.GET %}
+        <p>Actualizado Correctamente</p>
+    
+    {% endif %}
 
+    {% if "error" in request.GET %}
+        <p>Ocurrio un error al Actualizar</p>
+    
+    {% endif %}
+
+    <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+
+    <table>
+   <tr><th><label for="id">Id: </label></th><td><input type="text" name="id" id="id" value="{{producto.id}}" readonly></td></tr>
+   <tr><th><label for="titulo">Titulo: </label></th><td><input type="text" name="titulo" id="titulo" value="{{producto.titulo}}"></td></tr>
+
+   <tr><th><label for="descripcion">Descripción: </label></th><td><textarea name="descripcion" id="descripcion" cols="25" rows="10" value="">{{producto.descripcion}}</textarea></td></tr>
+
+   <tr><th><label for="categoria">Categoria: </label></th><td>   
+        <select name="categoria" id="categoria" >
+
+      {% for categoria in categorias %}
+        
+        {% if categoria == producto.categoria  %}
+            <option value="{{ categoria.nombre }}" selected="selected">{{ categoria.nombre }}</option>
+        {% else %}
+             <option value="{{ categoria.nombre }}">{{categoria.nombre}}</option>
+        {% endif %}
+      {% endfor %}
+
+      </select>
+      </td></tr>
+   
+    <tr><th><label for="imagen">Imagen: </label></th><td> <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg">  </td></tr>
+
+      <tr><th><label for="precio">Precio: </label></th><td><input type="text" name="precio" id="precio" value="{{producto.precio}}"> </td></tr>
+
+    <tr><th><input type="submit" value="Editar"></th><td></td></tr>
+    </table>
+
+
+     </form>
+     <button onclick="window.location.href='{% url 'Tienda:EliminarProducto' producto.id  %}';">Eliminar</button>
 <h1>{{producto.titulo}}</h1>
 
 <p>{{ producto.categoria }} - ${{ producto.precio }}</p>

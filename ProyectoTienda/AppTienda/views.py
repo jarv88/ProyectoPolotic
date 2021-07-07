@@ -95,11 +95,56 @@ def ver_producto(request,prod_id):
 @permission_required('Tienda.change_producto')
 @permission_required('Tienda.delete_producto')
 def editar_producto(request,prod_id):
-    
+    cat = CategoriaProd.objects.all()
     producto= Producto.objects.get(id=prod_id)
-    
-    #cat = CategoriaProd.objects.all()
-    return render(request, "AppTienda/editar_producto.html", {"producto": producto,})
+    list_cat=[]
+    for c in cat:
+        list_cat.append(c)
+
+    if request.method=="POST":
+        form = ImagenUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            img=form.cleaned_data['imagen']
+
+        titulo=request.POST.get("titulo")
+        descripcion=request.POST.get("descripcion")
+        categoria=request.POST.get("categoria")
+        imagen=img  #request.POST.get("imagen")
+        precio=request.POST.get("precio")
+
+        bcat = CategoriaProd.objects.get(nombre=categoria)
+        update_prod=Producto.objects.get(id=request.POST.get("id"))
+        update_prod.titulo=titulo
+        update_prod.descripcion=descripcion
+        update_prod.categoria=bcat
+        update_prod.precio=precio
+        update_prod.imagen=imagen
+
+        #nuevo_prod=Producto(titulo=titulo,imagen=imagen,descripcion=descripcion,precio=precio,categoria=bcat)
+
+        try:
+            id=request.POST.get("id")
+            update_prod.save()
+            #return HttpResponseRedirect(reverse("Tienda:EditarProducto", args=(producto.id,)))
+            return redirect(f"/{id}/editar/?valido")
+        except:
+            return redirect(f"/{id}/editar/?error")
+    return render(request, "AppTienda/editar_producto.html", {"producto": producto,"categorias": list_cat})
+
+def eliminar_producto(request,prod_id):
+    producto= Producto.objects.get(id=prod_id)
+    try:
+        producto.delete()
+        return redirect("/")
+    except:
+        print("error")
+        return redirect("/")
+      
+
+
+
+
+
 
 
 def registrarse(request):
