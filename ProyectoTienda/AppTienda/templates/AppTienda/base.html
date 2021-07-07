@@ -50,8 +50,13 @@
                 {% endif%}
             {% endif%}
         </ul>
+        <form id="form_buscar" action="{% url 'Tienda:Buscar' %}" method="POST"> {% csrf_token %}
+            <input type="text" name="buscar" placeholder="buscar...">
+            
+
+            <input type="submit" value="Buscar">
+        </form>
         
-        <input type="text" placeholder="buscar...">
     </nav>
     <section>
     {% block content %} {% endblock content %}

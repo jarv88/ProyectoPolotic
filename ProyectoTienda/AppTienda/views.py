@@ -27,6 +27,12 @@ def categoria(request,categoria):
 def acerca(request):
     return render(request, "AppTienda/acerca.html",)
 
+def buscar(request):
+    if request.method == "POST":
+        texto = request.POST.get("buscar")
+        productos=Producto.objects.filter(titulo__contains=texto)
+        return render(request,"AppTienda/buscar.html",{"productos":productos})
+
 
 def contacto(request):
     form = ContactForm()

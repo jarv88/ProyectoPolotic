@@ -75,6 +75,12 @@ color: #EEEEEE;
 
 }
 
+
+#form_buscar{
+    display: inline-block;
+}
+
+
 #ver_prod {
     
         width: 300px;
