@@ -6,14 +6,26 @@
 {% block content %}
 
 <h1>Productos en Carrito de compras</h1>
-<ul>
+
+<table id="carro">
+<tr>
+    <th>Producto</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Restar</th>
+</tr>
 
 {% for id, valor in carro.items %}
-        <li>{{ valor.titulo }} - {{ valor.cantidad }} - ${{ valor.precio }} <a href="{% url 'Tienda:RestarCarro' valor.producto_id %}">X</a>  </li>
+     <tr>
+     <td>{{ valor.titulo }}</td>
+     <td>{{ valor.cantidad }}</td>
+     <td>${{ valor.precio }}</td>
+     <td><a href="{% url 'Tienda:RestarCarro' valor.producto_id %}">X</a></td>
+     </tr>    
     
     {% endfor %}
-</ul>
 
+</table>
 <a href="{% url 'Tienda:LimpiarCarro' %}">Vaciar carrito</a>
 
 {% endblock content %}

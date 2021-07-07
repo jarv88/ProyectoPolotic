@@ -7,13 +7,25 @@
 
 {% for producto in productos %}
 
-    <h1>{{producto.titulo}}</h1>
-
-<p>{{ producto.categoria }} - ${{ producto.precio }}</p>
-
-<p>{{ producto.descripcion }}</p>
-
-<img id="ver_prod" class="" src="{{producto.imagen.url}}" alt="" style="width: 50%;">
+<div class="card">
+    <img src="{{producto.imagen.url}}" alt="{{ producto.titulo }}" style="width:50%">
+    <h1><a href="
+    {% if request.user.is_authenticated %}
+                {% if perms.Tienda.change_producto or perms.Tienda.delete_producto  %}
+                    {% url 'Tienda:EditarProducto' producto.id %}
+                {% else %}
+                    {% url 'Tienda:VerProducto' producto.id %}
+                {% endif%}
+    {% else %}
+        {% url 'Tienda:VerProducto' producto.id %}
+    {% endif%}
+    
+    "> 
+    {{ producto.titulo }} </a></h1>
+    <p class="price">${{ producto.precio }}</p>
+    <p>{{ producto.descripcion }}</p>
+    <button role="link" onclick="window.location.href='{% url 'Tienda:AgregarProducto' producto.id  %}';">Agregar al carrito</button>
+    </div>
 
 
 {% endfor %}
