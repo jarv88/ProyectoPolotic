@@ -99,3 +99,5 @@ color: #EEEEEE;
     padding: 3px;
     
 }
+
+table th{ text-align: right; }

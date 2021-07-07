@@ -51,6 +51,7 @@ def contacto(request):
 
     return render(request, "AppTienda/contacto.html", {"formulario": form})
 
+@permission_required('Tienda.add_producto')
 def nuevo(request):
     cat = CategoriaProd.objects.all()
     #Incluido para poder tener upload_to al momento de guardar la imagen
@@ -90,6 +91,16 @@ def ver_producto(request,prod_id):
     
     #cat = CategoriaProd.objects.all()
     return render(request, "AppTienda/ver_producto.html", {"producto": producto,})
+
+@permission_required('Tienda.change_producto')
+@permission_required('Tienda.delete_producto')
+def editar_producto(request,prod_id):
+    
+    producto= Producto.objects.get(id=prod_id)
+    
+    #cat = CategoriaProd.objects.all()
+    return render(request, "AppTienda/editar_producto.html", {"producto": producto,})
+
 
 def registrarse(request):
     if request.method == 'POST':

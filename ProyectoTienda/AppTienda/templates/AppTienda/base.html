@@ -44,7 +44,11 @@
             <li><a href="{% url 'Tienda:Categorias' %}">Categorias</a></li>
             <li><a href="{% url 'Tienda:Acerca' %}">Acerca De</a></li>
             <li><a href="{% url 'Tienda:Contacto' %}">Contacto</a></li>
-            <li><a href="{% url 'Tienda:Nuevo' %}">Nuevo</a></li>
+            {% if request.user.is_authenticated %}
+                {% if perms.Tienda.add_producto %}
+                    <li><a href="{% url 'Tienda:Nuevo' %}">Nuevo</a></li>
+                {% endif%}
+            {% endif%}
         </ul>
         <input type="text" placeholder="buscar...">
     </nav>

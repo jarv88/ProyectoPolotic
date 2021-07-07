@@ -16,12 +16,12 @@
 
  <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
 
+   <table>
+   <tr><th><label for="titulo">Titulo: </label></th><td><input type="text" name="titulo" id="titulo"></td></tr>
 
-   <p id="p_titulo"><label for="titulo">Titulo: </label><input type="text" name="titulo" id="titulo"> </p>
+   <tr><th><label for="descripcion">Descripción: </label></th><td><textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea></td></tr>
 
-   <p id="p_descripcion"><label for="descripcion">Descripción: </label><textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea></p>
-
-   <p id="p_categoria"><label for="categoria">Categoria: </label>
+   <tr><th><label for="categoria">Categoria: </label></th><td>
 
       <select name="categoria" id="categoria">
 
@@ -30,21 +30,14 @@
       <option value="{{ categoria.nombre }}">{{ categoria.nombre }}</option>
       {% endfor %}
 
-      </select>
+      </select></td></tr>
    
-    </p>
+    <tr><th><label for="imagen">Imagen: </label></th><td> <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg">  </td></tr>
 
-   <p> <label for="imagen">Imagen: </label> <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg"></p>   
+      <tr><th><label for="precio">Precio: </label></th><td><input type="text" name="precio" id="precio"> </td></tr>
 
-
-   <p id="p_precio"><label for="precio">Precio: </label><input type="text" name="precio" id="precio"> </p>
-
-
-
-
-   
-
-    <input type="submit" value="Crear">
+    <tr><th><input type="submit" value="Crear"></th></tr>
+    </table>
 
 
  </form>

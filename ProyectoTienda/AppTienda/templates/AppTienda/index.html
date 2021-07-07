@@ -9,7 +9,17 @@
 <ul>
 
 {% for producto in productos %}
-    <li> <a href="{% url 'Tienda:VerProducto' producto.id %}"> {{ producto.titulo }} - ${{ producto.precio }} </a> - <a href="{% url 'Tienda:AgregarProducto' producto.id  %}">Agregar al carrito</a>  </li>
+    <li> <a href="
+    {% if request.user.is_authenticated %}
+                {% if perms.Tienda.change_producto or perms.Tienda.delete_producto  %}
+                    {% url 'Tienda:EditarProducto' producto.id %}
+                {% else %}
+                    {% url 'Tienda:VerProducto' producto.id %}
+                {% endif%}
+    {% endif%}
+    
+    "> 
+    {{ producto.titulo }} - ${{ producto.precio }} </a> - <a href="{% url 'Tienda:AgregarProducto' producto.id  %}">Agregar al carrito</a>  </li>
 {% endfor %}
 </ul>
 {% endblock content %}
