@@ -116,7 +116,7 @@ def editar_producto(request,prod_id):
         descripcion=request.POST.get("descripcion")
         categoria=request.POST.get("categoria")
         imagen=img  #request.POST.get("imagen")
-        precio=request.POST.get("precio")
+        precio=float(request.POST.get("precio"))
 
         bcat = CategoriaProd.objects.get(nombre=categoria)
         update_prod=Producto.objects.get(id=request.POST.get("id"))
